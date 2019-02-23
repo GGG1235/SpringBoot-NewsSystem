@@ -210,12 +210,8 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2019-01-02 22:37:56', 'gxk1910@gmail.com', '2019-01-08 08:49:58', '15258390348', 1);
-INSERT INTO `user` VALUES (71, 'guxukai', 'e10adc3949ba59abbe56e057f20f883e', '2019-01-06 14:40:01', 'gxk1910@gmail.com', '2019-01-06 14:40:01', '15258390348', 2);
-INSERT INTO `user` VALUES (70, 'jitian233', 'e10adc3949ba59abbe56e057f20f883e', '2019-01-06 14:38:49', '675773625@qq.com', '2019-01-06 14:38:49', '15058230266', 3);
-INSERT INTO `user` VALUES (67, 'jitian234', 'e10adc3949ba59abbe56e057f20f883e', '2019-01-06 14:14:07', '675773625@qq.com', '2019-01-06 14:34:03', '15058230266', 2);
-INSERT INTO `user` VALUES (69, 'jitian', 'e10adc3949ba59abbe56e057f20f883e', '2019-01-06 14:38:02', '675773625@qq.com', '2019-01-06 14:38:16', '15058230266', 3);
-INSERT INTO `user` VALUES (17, 'ggg1235', 'e10adc3949ba59abbe56e057f20f883e', '2019-01-04 11:14:56', 'gxk1910@gmail.com', '2019-01-04 11:33:16', '15258390348', 1);
+INSERT INTO `user` VALUES (1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2019-01-02 22:37:56', 'gxk1910@gmail.com', '2019-01-08 08:49:58', '123456', 1);
+INSERT INTO `user` VALUES (17, 'ggg1235', 'e10adc3949ba59abbe56e057f20f883e', '2019-01-04 11:14:56', 'gxk1910@gmail.com', '2019-01-04 11:33:16', '123456', 3);
 COMMIT;
 
 -- ----------------------------
@@ -243,9 +239,9 @@ CREATE TABLE `user_detail` (
 -- Records of user_detail
 -- ----------------------------
 BEGIN;
-INSERT INTO `user_detail` VALUES (1, '2019-01-05 22:19:49', '2019-01-05 22:19:53', '1', '2000-01-05', '本科', '无', 17, '123456', '1269747793', 'M');
-INSERT INTO `user_detail` VALUES (55, '2019-01-05 23:35:41', '2019-01-05 23:50:22', '1', '1997-10-30', '本科', '无', 1, 'admin', '1140980288', 'M');
-INSERT INTO `user_detail` VALUES (68, '2019-01-06 14:14:31', '2019-01-07 12:34:58', '1', '2019-01-01', '本科', '无', 67, 'jitian234', '675773625', 'F');
+INSERT INTO `user_detail` VALUES (1, '2019-01-05 22:19:49', '2019-01-05 22:19:53', '1', '2000-01-05', '本科', '无', 17, '123456', '123456', 'M');
+INSERT INTO `user_detail` VALUES (55, '2019-01-05 23:35:41', '2019-01-05 23:50:22', '1', '1997-01-01', '本科', '无', 1, 'admin', '123456', 'M');
+INSERT INTO `user_detail` VALUES (68, '2019-01-06 14:14:31', '2019-01-07 12:34:58', '1', '2019-01-01', '本科', '无', 67, 'jitian234', '123456', 'F');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
