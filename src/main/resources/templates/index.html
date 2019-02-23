@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<title th:text="鸡天新闻-首页"></title>
+<head th:replace="~{fragments/header :: header}" >
+</head>
+<style type="text/css">
+    *{
+        font-family: 微软雅黑;
+    }
+
+</style>
+<body>
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="panel panel-warning ">
+                <div class="panel-heading">
+                    <h5>国 内 新 闻<span class="badge badge-danger">hot</span></h5>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group" th:each="news:${list1}">
+                        <a th:href="@{'~/news/detail/'+${news.getnewsId()}}" class="list-group-item">
+                            <h6 th:text="${news.getnewsTitle()}"></h6>
+                            <p th:text="${news.getnewsWord()}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-danger ">
+                <div class="panel-heading">
+                    <h5>国 际 新 闻</h5>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group" th:each="news:${list2}">
+                        <a th:href="@{'~/news/detail/'+${news.getnewsId()}}" class="list-group-item">
+                            <h6 th:text="${news.getnewsTitle()}"></h6>
+                            <p th:text="${news.getnewsWord()}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-warning ">
+                <div class="panel-heading">
+                    <h5>本 地 新 闻</h5>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group" th:each="news:${list3}">
+                        <a th:href="@{'~/news/detail/'+${news.getnewsId()}}" class="list-group-item">
+                            <h6 th:text="${news.getnewsTitle()}"></h6>
+                            <p th:text="${news.getnewsWord()}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-danger ">
+                <div class="panel-heading">
+                    <h5>娱 乐 新 闻</h5>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group" th:each="news:${list4}">
+                        <a th:href="@{'~/news/detail/'+${news.getnewsId()}}" class="list-group-item">
+                            <h6 th:text="${news.getnewsTitle()}"></h6>
+                            <p th:text="${news.getnewsWord()}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-danger ">
+                <div class="panel-heading">
+                    <h5>政 要 新 闻</h5>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group" th:each="news:${list5}">
+                        <a th:href="@{'~/news/detail/'+${news.getnewsId()}}" class="list-group-item">
+                            <h6 th:text="${news.getnewsTitle()}"></h6>
+                            <p th:text="${news.getnewsWord()}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<footer th:replace="~{fragments/footer :: footer}">...</footer>
+</html>

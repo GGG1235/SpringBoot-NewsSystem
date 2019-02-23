@@ -1,0 +1,50 @@
+spring:
+  h2:
+    console:
+      enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/news?useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=true
+    username: root
+    password: 1997
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Asia/Shanghai
+    show-sql: false
+  thymeleaf:
+    prefix: classpath:/templates/
+    encoding: UTF-8
+    cache: false
+    mode: HTML5
+  resources:
+    static-locations: classpath:/
+  session:
+    timeout: 600
+  jackson:
+    time-zone: Asia/Shanghai
+
+    serialization:
+      indent_output: true
+    date-format: yyyy-MM-dd HH:mm:ss
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+  address: localhost
+  jetty:
+    accesslog:
+      time-zone: Asia/Shanghai
+
+
+logging:
+  level:
+    org:
+      springframework:
+        security: info
+

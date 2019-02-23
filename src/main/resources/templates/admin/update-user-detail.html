@@ -1,0 +1,269 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<title th:text="鸡天新闻-管理"></title>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{../../static/admin/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../../static/admin/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../../static/admin/css/font-awesome.min.css}">
+    <script th:src="@{../../static/admin/js/jquery-2.1.4.min.js}"></script>
+    <script th:src="@{../../static/admin/js/bootstrap.min.js}"></script>
+    <script th:src="@{../../static/admin/js/admin-scripts.js}"></script>
+    <script th:src="@{../../static/js/md5.js}"></script>
+    <script th:src="@{../../static/js/jquery.form.min.js}"></script>
+    <script language="JavaScript" th:inline="javascript" type="text/javascript">
+        function checkEdit() {
+            var oldLoginPwd=document.editUser.oldLoginPwd.value;
+            var pwd1=document.editUser.loginPwd.value;
+            var pwd2=document.editUser.loginPwd1.value;
+            var oldPwd=[[${user.getloginPwd()}]];
+            if (oldPwd!==hex_md5(oldLoginPwd)){
+                alert("密码错误!");
+                return false;
+            }
+            if (pwd1!==pwd2){
+                alert("两次输入密码不相同!");
+                return false;
+            }
+            if (pwd1.length<6){
+                alert("密码长度需大于6!");
+                return false;
+            }
+            return true;
+        }
+        function updateUserDetail() {
+            var userId=[[${pUser.getuserId()}]];
+            var userName=document.getElementById("loginName").value;
+            var userQQ=document.getElementById("QQ").value;
+            var userAddress=document.getElementById("address").value;
+            var userBirthday=document.getElementById("birthday").value;
+            var userSex=$("input[name='sex']:checked").val();
+            var userEducation=$('#userEducation option:selected').val();
+            var userHobby=$('#hobby').val();
+            if (userHobby===""){
+                userHobby="无";
+            }
+            $.ajax({
+                url: "http://localhost:8080/newsAPI/edit-user-detail",
+                data: {
+                    userId:userId,
+                    userName:userName,
+                    userQQ:userQQ,
+                    userAddress:userAddress,
+                    userBirthday:userBirthday,
+                    userSex:userSex,
+                    userEducation:userEducation,
+                    userHobby:userHobby
+                },
+                type: "POST",
+                dataType: "json",
+                async: true,
+                success: function (re) {
+                    alert("更新成功!");
+                    console.log("success");
+                    window.location.reload()
+                },
+                error: function () {
+                    // alert("error");
+                    console.log(error());
+                    window.location.reload()
+                }
+            });
+        }
+
+    </script>
+</head>
+
+<body class="user-select">
+<section class="container-fluid">
+    <header>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                    <a class="navbar-brand" th:href="@{~/admin/index}">AdminSystem</a> </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${user.getloginName()}"> <span class="caret"></span></a>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                <li><a title="查看或修改个人信息" data-toggle="modal" data-target="#seeUserInfo">个人信息</a></li>
+                            </ul>
+                        </li>
+                        <li><a th:href="@{~/logout}" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+                    </ul>
+                    <form action="" method="post" class="navbar-form navbar-right" role="search">
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="row">
+        <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a th:href="@{~/admin/index}">报告</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a th:href="@{~/admin/index}">公告</a></li>
+                <li><a th:href="@{~/admin/manage-news}">管理文章</a></li>
+                <li><a th:href="@{~/admin/manage-user}">管理用户</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
+                </li>
+            </ul>
+        </aside>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main" th:if="${exist}">
+            <div class="row">
+                <div class="col-md-5">
+                    <h1 class="page-header">修改用户详情信息</h1>
+                    <form method="post" autocomplete="off" name="userDetail">
+                        <div class="form-group">
+                            <label for="loginName">用户名</label>
+                            <input type="text" id="loginName" name="loginName" class="form-control" required autocomplete="off" disabled="disabled" th:value="${userDetail.getuserName()}">
+                        </div>
+                        <div class="form-group">
+                            <label for="QQ">QQ</label>
+                            <input type="text" id="QQ" name="userQQ" class="form-control" required autocomplete="off" th:value="${userDetail.getuserQQ()}">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">住址</label>
+                            <input type="text" id="address" name="userAddress" class="form-control" required autocomplete="off" th:value="${userDetail.getuserAddress()}">
+                        </div>
+                        <div class="form-group">
+                            <label for="userEducation">学历</label>
+                            <select id="userEducation" name="userEducation" class="form-control">
+                                <option value="无" th:selected="${userDetail.getuserEducation() eq '无'}">无</option>
+                                <option value="专科" th:selected="${userDetail.getuserEducation() eq '专科'}">专科</option>
+                                <option value="本科" th:selected="${userDetail.getuserEducation() eq '本科'}">本科</option>
+                                <option value="研究生" th:selected="${userDetail.getuserEducation() eq '研究生'}">研究生</option>
+                                <option value="博士" th:selected="${userDetail.getuserEducation() eq '博士'}">博士</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthday">生日</label>
+                            <input type="date" id="birthday" name="birthday" class="form-control" autocomplete="off" th:value="${userDetail.getuserBirthday()}">
+                        </div>
+                        <div class="form-group">
+                            <label>性别</label>
+                            <p><input type="radio" name="sex" value="M" th:checked="${userDetail.getuserSex() eq 'M'}"/>男
+                                <input type="radio" name="sex" value="F" th:checked="${userDetail.getuserSex() eq 'F'}"/>女</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="hobby">爱好</label>
+                            <textarea class="form-control" id="hobby" name="hobby" rows="4" autocomplete="off" th:text="${userDetail.getuserHobby()}"></textarea>
+                        <button class="btn btn-primary" type="button" name="button" onclick="updateUserDetail()">更新</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main" th:if="${exist == false}">
+            <div class="row">
+                <div class="col-md-5">
+                    <h1 class="page-header">修改用户详情信息</h1>
+                    <form method="post" autocomplete="off" name="userDetail">
+                        <div class="form-group">
+                            <label for="loginName">用户名</label>
+                            <input type="text" id="loginName" name="loginName" class="form-control" required autocomplete="off" disabled="disabled" th:value="${pUser.getloginName()}">
+                        </div>
+                        <div class="form-group">
+                            <label for="QQ">QQ</label>
+                            <input type="text" id="QQ" name="userQQ" class="form-control" required autocomplete="off" placeholder="在此处输入qq号">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">住址</label>
+                            <input type="text" id="address" name="userAddress" class="form-control" required autocomplete="off" placeholder="在此处输入住址">
+                        </div>
+                            <div class="form-group">
+                                <label for="userEducation">学历</label>
+                                <select id="userEducation" name="userEducation" class="form-control">
+                                    <option value="无" selected="selected">无</option>
+                                    <option value="专科">专科</option>
+                                    <option value="本科">本科</option>
+                                    <option value="研究生">研究生</option>
+                                    <option value="博士">博士</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday">生日</label>
+                                <input type="date" id="birthday" name="birthday" class="form-control" placeholder="在此处输入生日" autocomplete="off">
+                            </div>
+                        <div class="form-group">
+                            <label>性别</label>
+                            <p><input type="radio" name="sex" value="M" checked="checked"/>男
+                                <input type="radio" name="sex" value="F" />女</p>
+                        </div>
+                            <div class="form-group">
+                                <label for="hobby">爱好</label>
+                                <textarea class="form-control" id="hobby" name="hobby" rows="4" autocomplete="off" placeholder="在此处输入爱好"></textarea>
+                            </div>
+                            <button class="btn btn-primary" type="button" name="button" onclick="updateUserDetail()">更新</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!--个人信息模态框-->
+<div class="modal fade" id="seeUserInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <form id="editUser" th:action="@{~/edit-user}" method="post" name="editUser" onsubmit="return checkEdit()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" >个人信息</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table" style="margin-bottom:0px;">
+                        <thead>
+                        <tr> </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td wdith="20%">用户名:</td>
+                            <td width="80%"><input type="text" th:value="${user.getloginName()}" class="form-control" name="loginName" maxlength="20" autocomplete="off" readonly="readonly" /></td>
+                        </tr>
+                        <tr>
+                            <td wdith="20%">电话:</td>
+                            <td width="80%"><input type="text" th:value="${user.getuserPhone()}" class="form-control" name="userPhone" maxlength="20" autocomplete="off" /></td>
+                        </tr>
+                        <tr>
+                            <td wdith="20%">邮箱:</td>
+                            <td width="80%"><input type="email" th:value="${user.getuserEmail()}" class="form-control" name="userEmail" maxlength="50" autocomplete="off" /></td>
+                        </tr>
+                        <tr>
+                            <td wdith="20%">旧密码:</td>
+                            <td width="80%"><input type="password" class="form-control" name="oldLoginPwd" maxlength="18" autocomplete="off" /></td>
+                        </tr>
+                        <tr>
+                            <td wdith="20%">新密码:</td>
+                            <td width="80%"><input type="password" class="form-control" name="loginPwd" maxlength="18" autocomplete="off" /></td>
+                        </tr>
+                        <tr>
+                            <td wdith="20%">确认密码:</td>
+                            <td width="80%"><input type="password" class="form-control" name="loginPwd1" maxlength="18" autocomplete="off" /></td>
+                            <td hidden="hidden"><input type="text" hidden="hidden" th:value="${user.getuserType()}" name="userType"></td>
+                            <td hidden="hidden"><input type="text" hidden="hidden" th:value="${user.getuserId()}" name="userId"></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr></tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

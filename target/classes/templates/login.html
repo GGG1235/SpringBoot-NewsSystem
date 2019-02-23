@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title th:text="鸡天新闻-登录"></title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{../../static/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{../../static/css/signin.css}" rel="stylesheet">
+    <script th:src="@{https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js}">
+    </script>
+</head>
+
+<body class="text-center">
+<form class="form-signin"  method="post" th:action="@{/login}">
+    <img class="mb-4" th:src="@{../static/images/Snow.svg}" alt="" width="72" height="72" style="CURSOR: hand" onclick='window.location.href="/index"'>
+    <h1 class="h3 mb-3 font-weight-normal">鸡 天 新 闻 -- 登 录</h1>
+    <input type="text" for="username" id="login_username" name="username" class="form-control" placeholder="用户名" required="" autofocus="">
+    <input type="password" for="password" id="password" name="password" class="form-control" placeholder="密码" required="">
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> 记住我 </label>
+    </div>
+    <div class=" col-md-12" th:if="${loginError}">
+        <p class="blog-label-error" style="color:red;" th:text="${errorMsg}"></p>
+    </div>
+    <button class="btn btn-lg btn-primary " style="width: 100px " type="submit">登 录</button>
+        <button class="btn btn-lg btn-primary " style="width: 100px " type="button" onclick="window.location.href='/register'" >注 册</button>
+    <p class="mt-5 mb-3 text-muted">© 2018-2019</p>
+</form>
+</body>
+</html>

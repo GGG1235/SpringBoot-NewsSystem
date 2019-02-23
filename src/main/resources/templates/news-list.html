@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<title th:text="'鸡天新闻-'+${title}"></title>
+<head th:replace="~{fragments/header::header}">
+</head>
+<script type="text/javascript" th:inline="javascript" language="JavaScript">
+    function goto() {
+        var obj = document.getElementById("pageSize");
+        var selie=obj.options;
+        var index=obj.selectedIndex;
+        obj.onchange=function (ev) {
+            index=obj.selectedIndex;
+            console.log(ev);
+            console.log(selie[index].value);
+            window.location.href='/news/list/'+id+'?pageIndex=1&pageSize='+selie[index].value;
+        };
+        var pageIndex=document.getElementById("pageIndex").value;
+        var id=[[${id}]];
+        if (pageIndex!==""){
+            console.log(pageIndex);}
+        else{
+            pageIndex=[[${pageIndex}]];
+            console.log(pageIndex);}
+        window.location.href='/news/list/'+id+'?pageIndex='+pageIndex+'&pageSize='+selie[index].value;
+    }
+</script>
+<body>
+<div class="my-3 p-5 bg-white rounded shadow-sm container">
+    <div class="media text-muted pt-2" th:each="news:${newsList}">
+        <div class="media-body pb-md-2 mb-0 small lh-50 border-bottom border-gray">
+            <div class="d-flex justify-content-between align-items-center w-75">
+                <strong class="text-gray-dark" th:text="${news.getnewsTitle()}"></strong>
+                <a th:href="@{'~/news/detail/'+${news.getnewsId()}}">查看详情</a>
+            </div>
+            <span class="d-block" th:text="${news.getnewsWord()}"></span>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="center container">
+        <div class="col-xs-6 col-md-12 col-center-block">
+            <ul class="pagination col-md-5 col-center-block">
+                <li class="page-item" th:if="${pageIndex != 1 and page.getTotalPages() != 0}"><a class="page-link" th:href="@{'~/news/list/'+${id}+'?pageIndex='+${pageIndex - 1}+'&pageSize='+${pageSize}}">&laquo;</a></li>
+                <li class="page-item" th:if="${page.getTotalPages() >= 2 and pageIndex < page.getTotalPages()}"><a class="page-link" th:href="@{'~/news/list/'+${id}+'?pageIndex='+${pageIndex}+'&pageSize='+${pageSize}}" th:text="${pageIndex}"></a></li>
+                <li class="page-item" th:if="${page.getTotalPages() >= 1 and pageIndex <= page.getTotalPages() - 1}"><a class="page-link" th:href="@{'~/news/list/'+${id}+'?pageIndex='+${pageIndex + 1}+'&pageSize='+${pageSize}}" th:text="${pageIndex + 1}"></a></li>
+                <li class="page-item"  style="white-space: nowrap" th:if="${page.getTotalPages() != 0 and page.getTotalPages() != 1}"><a class="page-link" th:href="@{'~/news/list/'+${id}+'?pageIndex='+${page.getTotalPages()}+'&pageSize='+${pageSize}}" th:text="${'尾页'}"></a></li>
+                <li class="page-item" th:if="${pageIndex != page.getTotalPages() and page.getTotalPages() != 0}"><a class="page-link" th:href="@{'~/news/list/'+${id}+'?pageIndex='+${pageIndex + 1}+'&pageSize='+${pageSize}}">&raquo;</a></li>
+                <li class="page-item">
+                    <label for="pageSize"><select id="pageSize" aria-controls="DataTables_Table_0" size="1" name="DataTables_Table_0_length" class="g-pages">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option selected="selected" value="15">15</option>
+                        <option value="20">20</option>
+                    </select></label>
+                </li>
+                <li class="page-item" style="white-space: nowrap">
+                    <strong style="font-size: smaller" th:text="'共'+${page.getTotalPages()}+'页,共检索'+${page.getTotalElements()}+'条,当前第'+${pageIndex}+'页'"></strong>
+                </li>
+                <li class="page-item">
+                    <input class="page-item" id="pageIndex" type="text" placeholder="输入跳转的页码" size="15">
+                </li>
+                <li class="page-item">
+                    <button class="page-item btn btn-primary" type="button" onclick="goto()">Go</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--分页/-->
+
+</body>
+<footer th:replace="~{fragments/footer :: footer}">...</footer>
+</html>

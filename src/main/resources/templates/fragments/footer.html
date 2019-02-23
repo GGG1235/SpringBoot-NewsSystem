@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" data-th-fragment="header">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{../../static/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{../../static/css/pricing.css}" rel="stylesheet">
+    <link th:href="@{../../static/css/carousel.css}" rel="stylesheet">
+</head>
+<body>
+
+
+<footer class="pt-4 my-md-5 pt-md-5 border-top container">
+    <div class="row">
+        <div class="col-12 col-md">
+            <img class="mb-2" th:src="@{../../static/images/Snow.svg}" alt="" width="24" height="24">
+            <small class="d-block mb-3 text-muted">&copy; 2018-2019</small>
+        </div>
+        <div class="col-6 col-md">
+            <h5>1</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="#">1-1</a></li>
+                <li><a class="text-muted" href="#">1-2</a></li>
+                <li><a class="text-muted" href="#">1-3</a></li>
+
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>2</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="#">2-1</a></li>
+                <li><a class="text-muted" href="#">2-2</a></li>
+                <li><a class="text-muted" href="#">2-3</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>关于我们</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="#">联系方式</a></li>
+                <li><a class="text-muted" th:href="@{~/user/index}" sec:authorize="hasRole('ROLE_USER_S')">投稿地址</a></li>
+                <li><a class="text-muted" href="https://github.com">Github</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" th:if="${ isLogin }">
+        <script language="JavaScript" th:inline="javascript" type="text/javascript">
+            function checkEdit() {
+                var oldLoginPwd=document.editUser.oldLoginPwd.value;
+                var pwd1=document.editUser.loginPwd.value;
+                var pwd2=document.editUser.loginPwd1.value;
+                var oldPwd=[[${user.getloginPwd()}]];
+                if (oldPwd!==hex_md5(oldLoginPwd)){
+                    alert("密码错误!");
+                    return false;
+                }
+                if (pwd1!==pwd2){
+                    alert("两次输入密码不相同!");
+                    return false;
+                }
+                if (pwd1.length<6){
+                    alert("密码长度需大于6!");
+                    return false;
+                }
+                return true;
+            }
+        </script>
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">个人信息</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <form onsubmit="return checkEdit()" th:action="@{~/edit-user}" method="post" name="editUser">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="loginName">用户名</label>
+                            <input type="email" class="form-control" id="loginName" name="loginName" readonly="readonly" th:value="${user.getloginName()}">
+                        </div>
+                        <div class="form-group">
+                            <label for="userPhone">电话</label>
+                            <input type="text" class="form-control" id="userPhone" name="userPhone" th:value="${user.getuserPhone()}">
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail">邮箱</label>
+                            <input type="email" class="form-control" id="userEmail" name="userEmail" th:value="${user.getuserEmail()}">
+                        </div>
+                        <div class="form-group">
+                            <label for="oldLoginPwd">旧密码</label>
+                            <input type="password" class="form-control" id="oldLoginPwd" name="oldLoginPwd">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPwd">新密码</label>
+                            <input type="password" class="form-control" id="loginPwd" name="loginPwd">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPwd1">确认密码</label>
+                            <input type="password" class="form-control" id="loginPwd1" name="loginPwd1">
+                        </div>
+                    </div>
+
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+   	<!-- JavaScript -->
+    <script th:src="@{../../static/js/jquery.js}"></script>
+    <script th:src="@{../../static/js/jquery.form.min.js}"></script>
+    <script th:src="@{../../static/js/tether.min.js}"></script>
+    <script th:src="@{../../static/js/bootstrap.min.js}"></script>
+    <script th:src="@{../../static/js/nprogress.js}"></script>
+    <script th:src="@{../../static/js/thinker-md.vendor.min.js}"></script>
+    <script th:src="@{../../static/js/bootstrap-tagsinput.min.js}"></script>
+    <script th:src="@{../../static/js/chosen.jquery.js}"></script>
+    <script th:src="@{../../static/js/toastr.min.js}"></script>
+    <script th:src="@{../../static/js/cropbox.js}"></script>
+    <script th:src="@{../../static/js/thymeleaf-bootstrap-paginator.js}"></script>
+    <script th:src="@{../../static/js/catalog-generator.js}"></script>
+    <script th:src="@{../../static/js/main.js}"></script>
+    <script th:src="@{../../static/js/bootstrap-paginator.min.js}"></script>
+ </footer>
+
+</body>
+</html>

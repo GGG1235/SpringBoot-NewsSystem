@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" data-th-fragment="header">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Tether core CSS -->
+    <link th:href="@{../../static/css/tether.min.css}" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link th:href="@{../../static/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Font-Awesome CSS -->
+    <link th:href="@{../../static/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- NProgress CSS -->
+    <link th:href="@{../../static/css/nprogress.css}" rel="stylesheet">
+
+    <!-- thinker-md CSS -->
+    <link th:href="@{../../static/css/thinker-md.vendor.css}" rel="stylesheet">
+
+    <!-- bootstrap tags CSS -->
+    <link th:href="@{../../static/css/bootstrap-tagsinput.css}" rel="stylesheet">
+    
+    <!-- bootstrap chosen CSS -->
+    <link th:href="@{../../static/css/component-chosen.min.css}" rel="stylesheet">
+
+    <!-- toastr CSS -->
+    <link th:href="@{../../static/css/toastr.min.css}" rel="stylesheet">
+    
+    <!-- jQuery image cropping plugin CSS -->
+    <link th:href="@{../../static/css/cropbox.css}" rel="stylesheet">
+    
+    <!-- Custom styles -->
+    <link th:href="@{../../static/css/style.css}" rel="stylesheet">
+    <link th:href="@{../../static/css/thymeleaf-bootstrap-paginator.css}"
+          rel="stylesheet">
+    <link th:href="@{../../static/css/blog.css}" rel="stylesheet">
+    <link th:href="@{../../static/css/navbar.css}" rel="stylesheet">
+
+    <link th:href="@{../../static/css/news.css}" rel="stylesheet">
+
+    <link th:href="@{../../static/css/bootstrap-responsive.css}" rel="stylesheet">
+
+    <script th:src="@{../../static/js/jquery.js}"></script>
+
+    <script th:src="@{../../static/js/bootstrap.min.js}"></script>
+
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm container" th:if="${ not isLogin }">
+        <h5 class="my-0 mr-md-auto font-weight-normal">
+            <a th:href="@{~/index}" style=" text-decoration: none; color: inherit;">鸡天🐔新闻</a>
+        </h5>
+
+        <link rel="stylesheet" th:href="@{../../static/bootstrap4.1.0/bootstrap.min.css}">
+        <script th:src="@{../../static/bootstrap4.1.0/jquery.min.js}"></script>
+        <script th:src="@{../../static/bootstrap4.1.0/popper.min.js}"></script>
+        <script th:src="@{../../static/bootstrap4.1.0/bootstrap.min.js}"></script>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" th:href="@{~/register}">注册</a>
+        </nav>
+        <button class="btn btn-primary" style="color: white" onclick="window.location.href='/login'">登 录</button>
+    </div>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm container" th:if="${ isLogin }">
+        <h5 class="my-0 mr-md-auto font-weight-normal">
+            <a th:href="@{~/index}" style=" text-decoration: none; color: inherit;">鸡天🐔新闻</a>
+        </h5>
+        <link rel="stylesheet" th:href="@{../../static/bootstrap4.1.0/bootstrap.min.css}">
+        <script th:src="@{../../static/bootstrap4.1.0/jquery.min.js}"></script>
+        <script th:src="@{../../static/bootstrap4.1.0/popper.min.js}"></script>
+        <script th:src="@{../../static/bootstrap4.1.0/bootstrap.min.js}"></script>
+        <div class="dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" th:text="${user.getloginName()}">
+            </button>
+            <div class="dropdown-menu">
+                <button class="btn dropdown-item" type="button" data-toggle="modal" data-target="#myModal">个人信息</button>
+                <div class="dropdown-divider" th:if="${user.getuserType() < 3}"></div>
+                <a class="dropdown-item" href="#" th:href="@{~/user/index}" th:if="${user.getuserType() < 3}">投稿地址</a>
+                <div class="dropdown-divider" th:if="${user.getuserType() == 1}"></div>
+                <a class="dropdown-item" th:href="@{~/admin/index}" th:if="${user.getuserType() == 1}">管理系统</a>
+            </div>
+        </div>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" th:href="@{~/logout}">退出</a>
+        </nav>
+    </div>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+            <a class="navbar-brand" th:href="@{~/index}">首页</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample09">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{~/news/list/1}">国内新闻 <span class="badge badge-danger">hot</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{~/news/list/2}">国际新闻</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{~/news/list/3}">本地新闻</a>
+                    </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{~/news/list/4}">娱乐新闻</a>
+                    </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{~/news/list/5}">政要新闻</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-md-0">
+                    <input class="form-control" type="text" placeholder="站内搜索" aria-label="站内搜索">
+                </form>
+            </div>
+        </nav>
+    </div>
+
+</head>

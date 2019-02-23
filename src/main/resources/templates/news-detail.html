@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<title th:text="${type}+'--'+${news.getnewsTitle()}"></title>
+<head th:replace="~{fragments/header::header}">
+</head>
+<body>
+<div class="container"> <!--style="border:1px solid #f00;"-->
+        <div class="container" style="word-wrap: break-word;width: 70%;float: inside" th:utext="${news.getnewsContent()}">
+        </div>
+        <div class="container center-align" style="text-align: center">
+            <footer class="message_footer">
+                <nav style="text-align:center;">
+                    <ul class="pagination pagenav" style="display:inline-block">
+                        <li style="display: inline"><a th:href="@{'~/news/detail/'+${previous}}" aria-label="Previous"> <span aria-hidden="true">&laquo;上一篇</span></a> </li>
+                        <li style="display: inline"><a th:href="@{'~/news/detail/'+${next}}" aria-label="Next"> <span aria-hidden="true">下一篇&raquo;</span> </a> </li>
+                    </ul>
+                </nav>
+            </footer>
+        </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}">...</footer>
+</body>
+</html>

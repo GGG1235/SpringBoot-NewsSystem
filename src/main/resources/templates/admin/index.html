@@ -1,0 +1,196 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<title th:text="鸡天新闻-管理"></title>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{../../static/admin/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{../../static/admin/css/style.css}">
+<link rel="stylesheet" type="text/css" th:href="@{../../static/admin/css/font-awesome.min.css}">
+<script th:src="@{../../static/admin/js/jquery-2.1.4.min.js}"></script>
+  <script th:src="@{../../static/admin/js/bootstrap.min.js}"></script>
+  <script th:src="@{../../static/admin/js/admin-scripts.js}"></script>
+  <script th:src="@{../../static/js/md5.js}"></script>
+  <script th:src="@{../../static/js/jquery.form.min.js}"></script>
+  <script language="JavaScript" th:inline="javascript" type="text/javascript">
+    function checkEdit() {
+      var oldLoginPwd=document.editUser.oldLoginPwd.value;
+      var pwd1=document.editUser.loginPwd.value;
+      var pwd2=document.editUser.loginPwd1.value;
+      var oldPwd=[[${user.getloginPwd()}]];
+      if (oldPwd!==hex_md5(oldLoginPwd)){
+        alert("密码错误!");
+        return false;
+      }
+      if (pwd1!==pwd2){
+        alert("两次输入密码不相同!");
+        return false;
+      }
+      if (pwd1.length<6){
+        alert("密码长度需大于6!");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</head>
+
+<body class="user-select">
+<section class="container-fluid">
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <a class="navbar-brand" th:href="@{~/admin/index}">AdminSystem</a> </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${user.getloginName()}"> <span class="caret"></span></a>
+              <ul class="dropdown-menu dropdown-menu-left">
+                <li><a title="查看或修改个人信息" data-toggle="modal" data-target="#seeUserInfo">个人信息</a></li>
+              </ul>
+            </li>
+            <li><a th:href="@{~/logout}" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+          </ul>
+          <form action="" method="post" class="navbar-form navbar-right" role="search">
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="row">
+    <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li><a th:href="@{~/admin/index}">报告</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a th:href="@{~/admin/index}">公告</a></li>
+        <li><a th:href="@{~/admin/manage-news}">管理文章</a></li>
+        <li><a th:href="@{~/admin/manage-user}">管理用户</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
+        </li>
+      </ul>
+    </aside>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
+      <h1 class="page-header">信息总览</h1>
+      <div class="row placeholders">
+        <div class="col-xs-6 col-sm-3 placeholder">
+          <h4>已发布文章</h4>
+          <span class="text-muted" th:text="${newsCount1}+' 条'"></span> </div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+          <h4>未审核文章</h4>
+          <span class="text-muted" th:text="${newsCount2}+' 条'"></span> </div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+          <h4>用户</h4>
+          <span class="text-muted" th:text="${userCount}+' 个'"></span> </div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+          <h4>文件</h4>
+          <span class="text-muted" th:text="${fileCount}+' 个'"></span> </div>
+      </div>
+      <h1 class="page-header">系统信息</h1>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr> </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>管理员个数:</td>
+              <td th:text="${adminCount}"></td>
+            </tr>
+            <tr>
+              <td>浏览器:</td>
+              <td><script>Browse()</script></td>
+            </tr>
+            <tr>
+              <td>操作系统:</td>
+              <td><script>getOS()</script></td>
+            </tr>
+            <tr>
+              <td>MYSQL版本:</td>
+              <td>5.7.22</td>
+            </tr>
+            <tr>
+              <td>上传文件:</td>
+              <td>可以 <font size="-6" color="#BBB">(最大文件：2M ，表单：8M )</font></td>
+            </tr>
+            <tr>
+              <td>程序编码:</td>
+              <td>UTF-8</td>
+            </tr>
+            <tr>
+              <td>当前时间:</td>
+              <td th:text="${#dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+<!--个人信息模态框-->
+<div class="modal fade" id="seeUserInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <form id="editUser" th:action="@{~/edit-user}" method="post" name="editUser" onsubmit="return checkEdit()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" >个人信息</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table" style="margin-bottom:0px;">
+            <thead>
+              <tr> </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td wdith="20%">用户名:</td>
+                <td width="80%"><input type="text" th:value="${user.getloginName()}" class="form-control" name="loginName" maxlength="20" autocomplete="off" readonly="readonly" /></td>
+              </tr>
+              <tr>
+                <td wdith="20%">电话:</td>
+                <td width="80%"><input type="text" th:value="${user.getuserPhone()}" class="form-control" name="userPhone" maxlength="20" autocomplete="off" /></td>
+              </tr>
+              <tr>
+                <td wdith="20%">邮箱:</td>
+                <td width="80%"><input type="email" th:value="${user.getuserEmail()}" class="form-control" name="userEmail" maxlength="50" autocomplete="off" /></td>
+              </tr>
+              <tr>
+                <td wdith="20%">旧密码:</td>
+                <td width="80%"><input type="password" class="form-control" name="oldLoginPwd" maxlength="18" autocomplete="off" /></td>
+              </tr>
+              <tr>
+                <td wdith="20%">新密码:</td>
+                <td width="80%"><input type="password" class="form-control" name="loginPwd" maxlength="18" autocomplete="off" /></td>
+              </tr>
+              <tr>
+                <td wdith="20%">确认密码:</td>
+                <td width="80%"><input type="password" class="form-control" name="loginPwd1" maxlength="18" autocomplete="off" /></td>
+                <td hidden="hidden"><input type="text" hidden="hidden" th:value="${user.getuserType()}" name="userType"></td>
+                <td hidden="hidden"><input type="text" hidden="hidden" th:value="${user.getuserId()}" name="userId"></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr></tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary">提交</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</html>

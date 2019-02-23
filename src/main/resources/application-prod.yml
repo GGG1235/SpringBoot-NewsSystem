@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://47.100.186.71:3306/news
+    password: root
+    username: root
