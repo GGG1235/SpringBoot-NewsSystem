@@ -22,3 +22,6 @@ public interface FileRepository extends JpaRepository<File,Long>{
 
 springboot+ueditor参考了
 [1]: https://blog.csdn.net/qq_33745799/article/details/70031641 "参考文章"
+
+截图:
+===
