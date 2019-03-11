@@ -20,4 +20,5 @@ public interface FileRepository extends JpaRepository<File,Long>{
 ```
 前端使用了Bootstrap框架,富文本编辑器使用百度的ueditor,使用模版引擎thymeleaf。
 
-springboot+ueditor参考了[1]: https://blog.csdn.net/qq_33745799/article/details/70031641 "CSDN"
+springboot+ueditor参考了
+[1]: https://blog.csdn.net/qq_33745799/article/details/70031641 "参考文章"
