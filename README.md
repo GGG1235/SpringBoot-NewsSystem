@@ -1,8 +1,22 @@
 # SpringBoot-NewsSystem
 大三上JavaWeb作业-新闻发布系统
 
-Java环境 java 10.0.2 2018-07-17
+java 10.0.2 2018-07-17
+
 mysql 5.7.22
+
+Apache Maven 3.6.0
+
+--------------------
+**ROLE_USER:普通用户,ROLE_USER_S:二级用户,ROLE_ADMIN:管理员**
+
+普通用户:只能浏览和改自己的密码
+
+二级用户:可以发新闻,相当于记者(需要审核)
+
+管理员:可以增删改查新闻,用户,更改用户权限最高只能改为二级用户
+
+
 
 SpringBoot
 ===
