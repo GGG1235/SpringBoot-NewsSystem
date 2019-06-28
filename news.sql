@@ -28,15 +28,6 @@ CREATE TABLE `authority` (
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
 -- ----------------------------
--- Records of authority
--- ----------------------------
-BEGIN;
-INSERT INTO `authority` VALUES (1, 'ROLE_ADMIN');
-INSERT INTO `authority` VALUES (2, 'ROLE_USER_S');
-INSERT INTO `authority` VALUES (3, 'ROLE_USER');
-COMMIT;
-
--- ----------------------------
 -- Table structure for file
 -- ----------------------------
 DROP TABLE IF EXISTS `file`;
